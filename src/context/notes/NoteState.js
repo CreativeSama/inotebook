@@ -2,12 +2,15 @@ import NoteContext from "./noteContext";
 import { useState } from "react";
 
 const NoteState = (props) => {
-  const host = "https://inotebook-il1u.onrender.com";
+  // ✅ DEPLOYMENT SAFE (ADDED)
+  const host =
+    process.env.REACT_APP_BACKEND_URL ||
+    "https://inotebook-il1u.onrender.com";
 
   const notesInitial = [];
   const [notes, setNotes] = useState(notesInitial);
 
-  // USER STATE
+  // USER STATE (unchanged)
   const [user, setUser] = useState(null);
 
   // ================= NOTES =================

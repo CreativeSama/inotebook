@@ -6,7 +6,7 @@ import React, {
 } from "react";
 import noteContext from "../context/notes/noteContext";
 import AddNote from "./AddNote";
-import Noteitem from "./NoteItem";
+import NoteItem from "./NoteItem";
 import { useNavigate } from "react-router-dom";
 
 const Notes = (props) => {
@@ -14,11 +14,9 @@ const Notes = (props) => {
   const { notes, getNotes, editNote, deleteNote } = context;
   const navigate = useNavigate();
 
-  // EDIT MODAL refs
   const ref = useRef(null);
   const refClose = useRef(null);
 
-  // DELETE MODAL refs
   const deleteRef = useRef(null);
   const deleteCloseRef = useRef(null);
 
@@ -29,7 +27,6 @@ const Notes = (props) => {
     etag: "",
   });
 
-  // NEW: store note id to delete
   const [deleteId, setDeleteId] = useState(null);
 
   useEffect(() => {
@@ -41,7 +38,7 @@ const Notes = (props) => {
     // eslint-disable-next-line
   }, []);
 
-  // ===== EDIT NOTE =====
+  // EDIT
   const updateNote = (currentNote) => {
     ref.current.click();
     setNote({
@@ -59,7 +56,7 @@ const Notes = (props) => {
     refClose.current.click();
   };
 
-  // ===== DELETE NOTE =====
+  // DELETE
   const confirmDelete = (id) => {
     setDeleteId(id);
     deleteRef.current.click();
@@ -77,7 +74,7 @@ const Notes = (props) => {
 
   return (
     <>
-      {/* EDIT MODAL BUTTON */}
+      {/* Hidden Buttons */}
       <button
         ref={ref}
         type="button"
@@ -86,7 +83,6 @@ const Notes = (props) => {
         data-bs-target="#editModal"
       ></button>
 
-      {/* DELETE MODAL BUTTON */}
       <button
         ref={deleteRef}
         type="button"
@@ -102,7 +98,6 @@ const Notes = (props) => {
             <div className="modal-header">
               <h5>Edit Note</h5>
             </div>
-
             <div className="modal-body">
               <input
                 className="form-control mb-2"
@@ -123,7 +118,6 @@ const Notes = (props) => {
                 onChange={onChange}
               />
             </div>
-
             <div className="modal-footer">
               <button
                 ref={refClose}
@@ -147,11 +141,9 @@ const Notes = (props) => {
             <div className="modal-header">
               <h5 className="text-danger">Delete Note</h5>
             </div>
-
             <div className="modal-body">
               Are you sure you want to delete this note?
             </div>
-
             <div className="modal-footer">
               <button
                 ref={deleteCloseRef}
@@ -168,20 +160,18 @@ const Notes = (props) => {
         </div>
       </div>
 
-      {/* ADD NOTE */}
       <AddNote showAlert={props.showAlert} />
 
-      <div className="row my-3">
-        <h2>Your Notes</h2>
-
+      <h2>Your Notes</h2>
+      <div className="row">
+        {notes.length === 0 && "No notes to display"}
         {notes.map((note) => (
-          <Noteitem
+          <NoteItem
             key={note._id}
             note={note}
             updateNote={updateNote}
             confirmDelete={confirmDelete}
-/>
-
+          />
         ))}
       </div>
     </>

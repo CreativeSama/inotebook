@@ -14,6 +14,11 @@ const Signup = (props) => {
   const context = useContext(noteContext);
   const { getUser } = context;
 
+  // ✅ DEPLOYMENT SAFE
+  const host =
+    process.env.REACT_APP_BACKEND_URL ||
+    "https://inotebook-il1u.onrender.com";
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -22,46 +27,81 @@ const Signup = (props) => {
       return;
     }
 
-    const response = await fetch(
-      "http://localhost:5000/api/auth/createuser",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: credentials.name,
-          email: credentials.email,
-          password: credentials.password,
-        }),
-      }
-    );
+    const response = await fetch(`${host}/api/auth/createuser`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: credentials.name,
+        email: credentials.email,
+        password: credentials.password,
+      }),
+    });
 
     const json = await response.json();
 
     if (json.authtoken) {
       localStorage.setItem("token", json.authtoken);
 
-      await getUser(); // ⭐ critical line
+      // ⭐ already existing logic
+      await getUser();
 
       props.showAlert("Account created successfully", "success");
-
-      setTimeout(() => navigate("/"), 500);
+      navigate("/");
     } else {
       props.showAlert("Invalid details", "danger");
     }
   };
 
-  const onChange = (e) =>
+  const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
+  };
 
   return (
     <div className="container my-3">
-      <h2>Signup</h2>
+      <h2>Create an account</h2>
+
       <form onSubmit={handleSubmit}>
-        <input name="name" className="form-control my-2" placeholder="Name" onChange={onChange} required />
-        <input name="email" className="form-control my-2" placeholder="Email" onChange={onChange} required />
-        <input name="password" type="password" className="form-control my-2" placeholder="Password" onChange={onChange} required />
-        <input name="cpassword" type="password" className="form-control my-2" placeholder="Confirm Password" onChange={onChange} required />
-        <button className="btn btn-primary">Signup</button>
+        <input
+          type="text"
+          className="form-control my-2"
+          name="name"
+          placeholder="Name"
+          onChange={onChange}
+          required
+        />
+
+        <input
+          type="email"
+          className="form-control my-2"
+          name="email"
+          placeholder="Email"
+          onChange={onChange}
+          required
+        />
+
+        <input
+          type="password"
+          className="form-control my-2"
+          name="password"
+          placeholder="Password"
+          onChange={onChange}
+          required
+        />
+
+        <input
+          type="password"
+          className="form-control my-2"
+          name="cpassword"
+          placeholder="Confirm Password"
+          onChange={onChange}
+          required
+        />
+
+        <button type="submit" className="btn btn-primary">
+          Signup
+        </button>
       </form>
     </div>
   );

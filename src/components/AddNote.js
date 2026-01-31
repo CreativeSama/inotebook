@@ -13,14 +13,8 @@ const AddNote = (props) => {
 
   const handleClick = (e) => {
     e.preventDefault();
-
-    // original logic
     addNote(note.title, note.description, note.tag);
-
-    // ✅ ONLY NEW LINE (ALERT)
     props.showAlert("Note added successfully", "success");
-
-    // original logic
     setNote({ title: "", description: "", tag: "" });
   };
 
@@ -33,42 +27,34 @@ const AddNote = (props) => {
       <h2>Add a Note</h2>
 
       <form>
-        <div className="mb-3">
-          <input
-            className="form-control"
-            placeholder="Title"
-            name="title"
-            value={note.title}
-            onChange={onChange}
-            minLength={5}
-            required
-          />
-        </div>
-
-        <div className="mb-3">
-          <input
-            className="form-control"
-            placeholder="Description"
-            name="description"
-            value={note.description}
-            onChange={onChange}
-            minLength={5}
-            required
-          />
-        </div>
-
-        <div className="mb-3">
-          <input
-            className="form-control"
-            placeholder="Tag"
-            name="tag"
-            value={note.tag}
-            onChange={onChange}
-          />
-        </div>
+        <input
+          className="form-control my-2"
+          placeholder="Title"
+          name="title"
+          value={note.title}
+          onChange={onChange}
+          minLength={3}
+          required
+        />
+        <input
+          className="form-control my-2"
+          placeholder="Description"
+          name="description"
+          value={note.description}
+          onChange={onChange}
+          minLength={5}
+          required
+        />
+        <input
+          className="form-control my-2"
+          placeholder="Tag"
+          name="tag"
+          value={note.tag}
+          onChange={onChange}
+        />
 
         <button
-          disabled={note.title.length < 5 || note.description.length < 5}
+          disabled={note.title.length < 3 || note.description.length < 5}
           className="btn btn-primary"
           onClick={handleClick}
         >

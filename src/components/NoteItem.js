@@ -1,13 +1,11 @@
 import React from "react";
 
-const Noteitem = (props) => {
-  const { note, updateNote, confirmDelete } = props;
-
+const NoteItem = ({ note, updateNote, confirmDelete }) => {
   return (
     <div className="col-md-3">
       <div className="card my-3">
         <div className="card-body">
-          <div className="d-flex justify-content-between align-items-center">
+          <div className="d-flex justify-content-between">
             <h5 className="card-title">{note.title}</h5>
 
             <div>
@@ -15,7 +13,6 @@ const Noteitem = (props) => {
                 className="far fa-trash-alt mx-2 text-danger"
                 onClick={() => confirmDelete(note._id)}
               ></i>
-
               <i
                 className="far fa-edit mx-2 text-primary"
                 onClick={() => updateNote(note)}
@@ -30,4 +27,4 @@ const Noteitem = (props) => {
   );
 };
 
-export default Noteitem;
+export default NoteItem;

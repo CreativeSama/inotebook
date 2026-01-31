@@ -11,16 +11,10 @@ import Alert from "./components/Alert";
 import NoteState from "./context/notes/NoteState";
 
 function App() {
-  // original central alert state
   const [alert, setAlert] = useState(null);
 
-  // original showAlert function
   const showAlert = (message, type) => {
-    setAlert({
-      msg: message,
-      type: type,
-    });
-
+    setAlert({ msg: message, type });
     setTimeout(() => {
       setAlert(null);
     }, 1500);
@@ -29,34 +23,15 @@ function App() {
   return (
     <NoteState>
       <Router>
-        {/* original navbar */}
         <Navbar showAlert={showAlert} />
-
-        {/* original alert placement */}
         <Alert alert={alert} />
 
         <div className="container">
           <Routes>
-            {/* ONLY change: pass showAlert to Home */}
-            <Route
-              exact
-              path="/"
-              element={<Home showAlert={showAlert} />}
-            />
-
-            <Route exact path="/about" element={<About />} />
-
-            <Route
-              exact
-              path="/login"
-              element={<Login showAlert={showAlert} />}
-            />
-
-            <Route
-              exact
-              path="/signup"
-              element={<Signup showAlert={showAlert} />}
-            />
+            <Route path="/" element={<Home showAlert={showAlert} />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/login" element={<Login showAlert={showAlert} />} />
+            <Route path="/signup" element={<Signup showAlert={showAlert} />} />
           </Routes>
         </div>
       </Router>
