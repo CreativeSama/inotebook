@@ -4,9 +4,11 @@
   "description": "Backend for iNotebook MERN app",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
-  },
+  "start": "react-scripts start",
+  "build": "react-scripts build",
+  "test": "react-scripts test",
+  "eject": "react-scripts eject"
+},
   "author": "Samadhan",
   "license": "ISC",
   "dependencies": {
